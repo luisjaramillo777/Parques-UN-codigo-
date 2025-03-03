@@ -1,0 +1,128 @@
+# Documentación del Juego Parqués UN
+
+## Documentación para Desarrolladores
+
+### Estructura del Código
+
+El código del juego Parqués UN está organizado de manera modular y se basa en programación estructural. A continuación, se describen los principales componentes y su funcionamiento:
+
+#### Constantes y Variables Globales
+
+- `NUM_CASILLAS_EXTERNAS`: Define el número total de casillas en el recorrido externo (68).
+- `NUM_CASILLAS_INTERNAS`: Define el número de casillas internas para cada jugador (8).
+- `NUM_FICHAS`: Define el número de fichas por jugador (4).
+- `CASILLAS_SEGURO`: Lista con las posiciones de las casillas de seguro.
+- `CARCEL`: Constante que representa cuando una ficha está en la cárcel (-1).
+- `META`: Constante que representa cuando una ficha ha llegado a la meta (0).
+- `POSICIONES_INICIALES`: Diccionario que mapea los colores de los jugadores con sus posiciones iniciales en el tablero.
+
+#### Representación del Tablero
+
+El tablero se representa mediante un diccionario (`tablero`) donde:
+- Las claves son los números de casilla (1-68) para el recorrido externo.
+- Para las casillas internas, las claves tienen el formato `"color_número"` (ej: `"azul_3"`).
+- Los valores son listas que contienen las fichas en cada casilla.
+
+#### Representación de Jugadores
+
+Cada jugador se representa como un diccionario con las siguientes propiedades:
+- `nombre`: Nombre del jugador.
+- `color`: Color asignado (rojo, verde, amarillo o azul).
+- `fichas`: Lista con las posiciones de cada ficha.
+- `fichas_en_meta`: Contador de fichas que han llegado a la meta.
+
+#### Funciones Principales
+
+1. **Inicialización**:
+   - `inicializar_jugadores()`: Configura los jugadores y sus colores.
+   - `inicializar_tablero()`: Prepara la estructura de datos del tablero.
+
+2. **Visualización**:
+   - `mostrar_tablero()`: Muestra la representación ASCII del tablero y el estado del juego.
+   - `limpiar_pantalla()`: Función auxiliar para mantener la consola limpia.
+
+3. **Lógica del Juego**:
+   - `lanzar_dados()`: Simula el lanzamiento de dados (aleatorio o elegido en modo desarrollador).
+   - `sacar_ficha_de_carcel()`: Gestiona la acción de sacar una ficha de la cárcel.
+   - `mover_ficha()`: Maneja el movimiento de las fichas en el tablero.
+   - `calcular_nueva_posicion()`: Determina la nueva posición después de un movimiento.
+   - `ejecutar_movimiento_adicional()`: Gestiona los movimientos adicionales (10) al llegar a meta.
+   - `verificar_ganador()`: Determina si un jugador ha ganado.
+   - `ejecutar_turno()`: Coordina todas las acciones de un turno.
+
+4. **Control Principal**:
+   - `jugar_parques()`: Función que controla el flujo principal del juego.
+   - `main()`: Punto de entrada al programa.
+
+### Reglas Implementadas
+
+- Las fichas comienzan en la cárcel y necesitan un 5 en los dados para salir.
+- Al sacar un 5, el jugador puede elegir si sacar una ficha o mover las que ya están en el tablero.
+- Las casillas de seguro (marcadas con "S") permiten que fichas de diferentes jugadores coexistan.
+- Cuando una ficha llega a una casilla ocupada por una ficha enemiga (fuera de seguro), la captura.
+- Cuando una ficha llega a la meta, el jugador obtiene 10 movimientos adicionales.
+- Se gana cuando todas las fichas de un jugador llegan a la meta.
+
+### Sugerencias para Mejoras
+
+1. **Optimización del Código**:
+   - Refactorizar funciones grandes como `mostrar_tablero()` para mejorar legibilidad.
+   - Implementar manejo de errores más robusto.
+
+2. **Mejoras de Visualización**:
+   - Mejorar la representación ASCII del tablero para mayor claridad.
+   - Añadir opciones para ajustar colores según preferencias o restricciones del terminal.
+
+3. **Expansiones**:
+   - Implementar reglas adicionales como "soplado" (penalización por no capturar).
+   - Añadir opciones para guardar/cargar partidas.
+   - Implementar una versión con interfaz gráfica usando Tkinter o Pygame.
+
+## Documentación para Usuarios
+
+### Manual del Juego Parqués UN
+
+#### ¿Qué es Parqués UN?
+
+Parqués UN es una implementación en consola del tradicional juego de mesa Parqués (similar al Parchís), diseñado como proyecto para la asignatura "Programación de Computadores" en la Universidad Nacional de Colombia.
+
+#### Requisitos
+
+Para jugar necesitas:
+- Python 3.x instalado en tu sistema
+- Terminal o consola que soporte colores ANSI (la mayoría de terminales modernos)
+
+#### Cómo Iniciar el Juego
+
+1. Abre tu terminal o consola
+2. Navega hasta la carpeta donde se encuentra el archivo `parques_un.py`
+3. Ejecuta el comando: `python parques_un.py`
+
+#### Modos de Juego
+
+El juego ofrece dos modos:
+- **Modo Real (R)**: Los dados se lanzan aleatoriamente.
+- **Modo Desarrollador (D)**: Puedes elegir el valor de los dados en cada turno.
+
+#### Configuración Inicial
+
+1. Selecciona el número de jugadores (2-4)
+2. Para cada jugador:
+   - Elige un color disponible (rojo, verde, amarillo o azul)
+   - Ingresa tu nombre
+
+#### Cómo Jugar
+
+1. **Objetivo del Juego**: Ser el primer jugador en llevar todas tus fichas desde la cárcel hasta la meta.
+
+2. **Turnos**:
+   - Los jugadores se alternan en sentido horario.
+   - En cada turno, el jugador lanza dos dados.
+   - Puede mover sus fichas según: valor del primer dado, valor del segundo dado, o suma de ambos.
+
+3. **Salir de la Cárcel**:
+   - Para sacar una ficha de la cárcel, debes obtener un 5 en alguno de los dados.
+   - Cuando sacas un 5, puedes elegir sacar una ficha o mover las existentes.
+
+4. **Movimiento**:
+   - Las fichas se mueven en sentido horario por el recorrido externo.
